@@ -9,6 +9,10 @@ import (
 func add(c *gin.Context) {
 
 	request.Data(c.Request)
+
+
+
+
 	//routeParams := mux.Vars(c.Request)
 
 }

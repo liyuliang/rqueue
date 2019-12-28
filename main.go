@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/liyuliang/rqueue/route"
+	"github.com/liyuliang/rqueue/system"
 	"flag"
 	"fmt"
 	"os"
@@ -9,21 +10,20 @@ import (
 
 func main() {
 
+	system.Init(redis)
 	route.Start(p)
 }
 
 var (
-	a string
-	p string
-	g string
+	redis string
+	p     string
 )
 
 func init() {
-	required := []string{"a", "g"}
+	required := []string{"redis", "p",}
 
-	flag.StringVar(&a, "a", "", "auth token")
-	flag.StringVar(&g, "g", "", "gateway url")
 	flag.StringVar(&p, "p", "8888", "web port")
+	flag.StringVar(&redis, "redis", "", "redis connect address")
 
 	flag.Parse()
 
