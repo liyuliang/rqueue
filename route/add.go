@@ -16,16 +16,20 @@ const CATEGORY = "type"
 
 func add(c *gin.Context) {
 
-	data := request.Data(c.Request)
+	post := request.Data(c.Request)
 
-	err := checkJob(data)
+	err := checkJob(post)
 	if err != nil {
-
+		c.JSON(200, format.ToMapData(map[string]string{
+			"error":   err.Error(),
+			"success": "false",
+		}))
+		c.Abort()
 	}
 
-	key := genQueueKey(data)
+	key := genQueueKey(post)
 	client := system.Client()
-	r := client.RPush(key, format.ToMapData(data).ToString())
+	r := client.RPush(key, format.ToMapData(post).ToString())
 	if r.Err() != nil {
 		c.JSON(200, format.ToMapData(map[string]string{
 			"error":   r.Err().Error(),

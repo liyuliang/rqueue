@@ -7,7 +7,7 @@ import (
 func Start(port string) {
 
 	r := gin.Default()
-	r.GET("/add", add)
+	r.POST("/add", add)
 
 
 	r.NoRoute(method404)
