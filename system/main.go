@@ -1,12 +1,9 @@
 package system
 
-import "net/url"
+import "time"
 
 func Init(redisUri string) {
 
-
-	U, _ := url.Parse(redisUri)
-	pwd,_ := U.User.Password()
-
-
+	c := Conn(redisUri)
+	c.Set("name", "liang", time.Second * 600)
 }

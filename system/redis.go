@@ -15,7 +15,6 @@ func Conn(redisUri string) *redis.Client {
 		}
 
 		client = redis.NewClient(opt)
-
 	}
 	return client
 }
