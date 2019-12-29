@@ -2,16 +2,14 @@ package route
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/liyuliang/rqueue/request"
-	//"github.com/gorilla/mux"
 )
 
 func add(c *gin.Context) {
 
-	request.Data(c.Request)
-
-
-
+	//data := request.Data(c.Request)
+	//
+	//c := system.Client()
+	//c.
 
 	//routeParams := mux.Vars(c.Request)
 

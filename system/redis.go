@@ -6,7 +6,7 @@ import (
 
 var client *redis.Client
 
-func Conn(redisUri string) *redis.Client {
+func conn(redisUri string) *redis.Client {
 
 	if client == nil {
 		opt, err := redis.ParseURL(redisUri)
@@ -17,4 +17,13 @@ func Conn(redisUri string) *redis.Client {
 		client = redis.NewClient(opt)
 	}
 	return client
+}
+
+func Client() *redis.Client{
+	redisUri := Config()["redisUri"]
+	if redisUri == "" {
+		panic("redis connect address is required")
+	}
+
+	return conn(redisUri)
 }

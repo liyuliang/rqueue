@@ -4,6 +4,14 @@ import "time"
 
 func Init(redisUri string) {
 
-	c := Conn(redisUri)
-	c.Set("name", "liang", time.Second * 600)
+	_config["redisUri"] = redisUri
+
+	initRedis()
+}
+
+func initRedis() {
+
+	c := Client()
+	c.Set("STARTTIME", time.Now().String(), 0)
+
 }
