@@ -10,20 +10,21 @@ import (
 
 func main() {
 
-	system.Init(redis)
+	system.Init(u)
 	route.Start(p)
 }
 
 var (
-	redis string
-	p     string
+	u string
+	p string
 )
 
 func init() {
-	required := []string{"redis", "p",}
+
+	var required []string
 
 	flag.StringVar(&p, "p", "8888", "web port")
-	flag.StringVar(&redis, "redis", "", "redis connect address")
+	flag.StringVar(&u, "u", "redis://127.0.0.1:6379/0", "using the redis -u <uri> option and a valid URI")
 
 	flag.Parse()
 
