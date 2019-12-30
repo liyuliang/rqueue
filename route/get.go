@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/liyuliang/utils/format"
 	"github.com/liyuliang/rqueue/system"
+	"strings"
 )
 
 func get(c *gin.Context) {
@@ -29,7 +30,10 @@ func get(c *gin.Context) {
 	for i := 0; i < n; i++ {
 		v := client.LPop(queue).Val()
 		if v != "" {
+
 			data = append(data, v)
+			k := strings.Replace(queue, "queue_", "total_", -1)
+			client.Decr(k)
 		}
 	}
 	c.JSON(200, data)

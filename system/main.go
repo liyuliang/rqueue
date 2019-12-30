@@ -15,6 +15,6 @@ func Init(data format.MapData) {
 func initRedis() {
 
 	c := Client()
-	c.Set("STARTTIME", time.Now().String(), 0)
+	c.Set("START_TIME", time.Now().String(), 0)
 
 }
