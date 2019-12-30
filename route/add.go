@@ -11,7 +11,6 @@ import (
 )
 
 const uuid = "uuid"
-const uri = "url"
 const uris = "[]url"
 const category = "type"
 
@@ -19,7 +18,7 @@ func add(c *gin.Context) {
 
 	id, err := getPostParam(c, uuid)
 	if err != nil {
-		c.JSON(200, format.ToMapData(map[string]string{
+		c.JSON(200, format.ToMap(map[string]string{
 			"error":   err.Error() + ":" + uuid,
 			"success": "false",
 		}))
@@ -29,7 +28,7 @@ func add(c *gin.Context) {
 	err = checkUUid(id)
 
 	if err != nil {
-		c.JSON(200, format.ToMapData(map[string]string{
+		c.JSON(200, format.ToMap(map[string]string{
 			"error":   err.Error(),
 			"success": "false",
 		}))
@@ -38,7 +37,7 @@ func add(c *gin.Context) {
 
 	cat, err := getPostParam(c, category)
 	if err != nil {
-		c.JSON(200, format.ToMapData(map[string]string{
+		c.JSON(200, format.ToMap(map[string]string{
 			"error":   err.Error() + ":" + category,
 			"success": "false",
 		}))
@@ -47,7 +46,7 @@ func add(c *gin.Context) {
 
 	urls, err := getPostParams(c, uris)
 	if err != nil {
-		c.JSON(200, format.ToMapData(map[string]string{
+		c.JSON(200, format.ToMap(map[string]string{
 			"error":   err.Error() + ":" + uris,
 			"success": "false",
 		}))
@@ -56,15 +55,16 @@ func add(c *gin.Context) {
 
 	client := system.Client()
 	for _, u := range urls {
-		key := genQueueKey(cat, u)
+		queue := genQueueName(cat, u)
+		total := genTotalQueueName(cat, u)
 
-		client.RPush(key, u)
+		client.RPush(queue, u)
+
 		//队列集-总数
-		// client.HSet()
+		client.Incr(total)
 	}
 
-
-	c.JSON(200, format.ToMapData(map[string]string{
+	c.JSON(200, format.ToMap(map[string]string{
 		"error":   "",
 		"success": "true",
 	}))
@@ -91,8 +91,16 @@ func getPostParam(c *gin.Context, key string) (string, error) {
 	return v, checkEmpty(v)
 }
 
-func genQueueKey(category, uri string) string {
+func genQueueType(category, uri string) string {
 	return category + "_" + getKeyFromUrl(uri)
+}
+
+func genQueueName(category, uri string) string {
+	return "queue_" + genQueueType(category, uri)
+}
+
+func genTotalQueueName(category, uri string) string {
+	return "total_" + genQueueType(category, uri)
 }
 
 func checkEmpty(v string) error {

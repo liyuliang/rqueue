@@ -1,12 +1,15 @@
 package system
 
-type appConfig map[string]string
+import "github.com/liyuliang/utils/format"
 
-var _config appConfig
+var _config format.MapData
 
 func init() {
-	_config = make(map[string]string)
+	_config = format.Map()
 }
-func Config() appConfig {
+
+func Config() format.MapData {
 	return _config
 }
+
+

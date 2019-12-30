@@ -1,10 +1,13 @@
 package system
 
-import "time"
+import (
+	"time"
+	"github.com/liyuliang/utils/format"
+)
 
-func Init(redisUri string) {
+func Init(data format.MapData) {
 
-	_config["redisUri"] = redisUri
+	_config = data
 
 	initRedis()
 }
