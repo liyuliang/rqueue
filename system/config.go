@@ -2,14 +2,14 @@ package system
 
 import "github.com/liyuliang/utils/format"
 
-var _config format.MapData
+var c format.MapData
 
 func init() {
-	_config = format.Map()
+	c = format.Map()
 }
 
 func Config() format.MapData {
-	return _config
+	return c
 }
 
 

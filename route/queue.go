@@ -9,7 +9,7 @@ import (
 
 func queue(c *gin.Context) {
 
-	client := system.Client()
+	client := system.Redis()
 
 	data := format.Map()
 	for _, v := range client.Keys("*").Val() {

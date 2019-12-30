@@ -13,7 +13,7 @@ func get(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(200, format.ToMap(map[string]string{
-			"error":   err.Error() + ":" + uuid,
+			"error":   err.Error() + ":" + token,
 			"success": "false",
 		}))
 		return
@@ -26,7 +26,7 @@ func get(c *gin.Context) {
 		n = format.StrToInt(system.Config()["popNum"])
 	}
 	var data []string
-	client := system.Client()
+	client := system.Redis()
 	for i := 0; i < n; i++ {
 		v := client.LPop(queue).Val()
 		if v != "" {

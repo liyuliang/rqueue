@@ -10,16 +10,16 @@ import (
 	"strings"
 )
 
-const uuid = "uuid"
+const token = "token"
 const uris = "[]url"
 const category = "type"
 
 func add(c *gin.Context) {
 
-	id, err := getPostParam(c, uuid)
+	id, err := getPostParam(c, token)
 	if err != nil {
 		c.JSON(200, format.ToMap(map[string]string{
-			"error":   err.Error() + ":" + uuid,
+			"error":   err.Error() + ":" + token,
 			"success": "false",
 		}))
 		return
@@ -53,7 +53,7 @@ func add(c *gin.Context) {
 		return
 	}
 
-	client := system.Client()
+	client := system.Redis()
 	for _, u := range urls {
 		queue := genQueueName(cat, u)
 		total := genTotalQueueName(cat, u)
@@ -71,7 +71,7 @@ func add(c *gin.Context) {
 }
 
 func checkUUid(uuid string) error {
-	//TODO 24小时 uuid, 防止重播攻击
+	//TODO 24小时 token, 防止重播攻击
 	return nil
 }
 

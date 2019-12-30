@@ -7,14 +7,14 @@ import (
 
 func Init(data format.MapData) {
 
-	_config = data
+	c = data
 
 	initRedis()
 }
 
 func initRedis() {
 
-	c := Client()
+	c := Redis()
 	c.Set("START_TIME", time.Now().String(), 0)
 
 }

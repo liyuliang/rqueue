@@ -19,7 +19,7 @@ func conn(redisUri string) *redis.Client {
 	return client
 }
 
-func Client() *redis.Client{
+func Redis() *redis.Client{
 	redisUri := Config()["redisUri"]
 	if redisUri == "" {
 		panic("redis connect address is required")

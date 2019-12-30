@@ -1,9 +1,9 @@
 package system
 
 import (
+	"github.com/zheng-ji/goSnowFlake"
 	"time"
 	"errors"
-	"github.com/zheng-ji/goSnowFlake"
 	"log"
 )
 
@@ -90,7 +90,7 @@ func generator() chan int64 {
 	return out
 }
 
-func Get() (id int64, err error) {
+func Uid() (id int64, err error) {
 
 	return uuidFromChannel()
 }

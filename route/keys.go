@@ -7,7 +7,7 @@ import (
 
 func keys(c *gin.Context) {
 
-	client := system.Client()
+	client := system.Redis()
 
 	var data []string
 	for _, v := range client.Keys("*").Val() {
