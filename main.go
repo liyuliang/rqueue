@@ -12,16 +12,19 @@ import (
 func main() {
 
 	system.Init(format.ToMap(map[string]string{
-		"redisUri": u,
-		"popNum":   format.IntToStr(n),
+		"redisUri":   u,
+		"popNum":     format.IntToStr(n),
+		//"uuidNumber": format.IntToStr(un),
 	}))
+
 	route.Start(p)
 }
 
 var (
-	u string
-	p string
-	n int
+	u  string
+	p  string
+	n  int
+	un int
 )
 
 func init() {
@@ -31,6 +34,7 @@ func init() {
 	flag.StringVar(&p, "p", "8888", "web port")
 	flag.StringVar(&u, "u", "redis://127.0.0.1:6379/0", "using the redis -u <uri> option and a valid URI")
 	flag.IntVar(&n, "n", 50, "default queue pop number")
+	flag.IntVar(&un, "un", 50, "uuid pool size")
 
 	flag.Parse()
 
