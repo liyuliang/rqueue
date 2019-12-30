@@ -7,4 +7,5 @@ require (
 	github.com/go-redis/redis/v7 v7.0.0-beta.4
 	github.com/liyuliang/utils v0.0.0-20191230080859-da801caf80e6
 	github.com/pkg/errors v0.8.1
+	github.com/zheng-ji/goSnowFlake v0.0.0-20180906112711-fc763800eec9
 )
