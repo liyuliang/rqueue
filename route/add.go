@@ -59,10 +59,8 @@ func add(c *gin.Context) {
 		key := genQueueKey(cat, u)
 
 		client.RPush(key, u)
-
-
 		//队列集-总数
-		client.HSet()
+		// client.HSet()
 	}
 
 
