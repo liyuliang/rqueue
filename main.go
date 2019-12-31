@@ -12,19 +12,21 @@ import (
 func main() {
 
 	system.Init(format.ToMap(map[string]string{
-		"redisUri":   u,
-		"popNum":     format.IntToStr(n),
-		//"uuidNumber": format.IntToStr(un),
+		system.SystemRedisUri: u,
+		system.SystemPopNum:   format.IntToStr(n),
+		system.SystemTplDir:   tplDir,
+		//"uuidNum":  format.IntToStr(un),
 	}))
 
 	route.Start(p)
 }
 
 var (
-	u  string
-	p  string
-	n  int
-	un int
+	u      string
+	p      string
+	n      int
+	un     int
+	tplDir string
 )
 
 func init() {
@@ -33,6 +35,7 @@ func init() {
 
 	flag.StringVar(&p, "p", "8888", "web port")
 	flag.StringVar(&u, "u", "redis://127.0.0.1:6379/0", "using the redis -u <uri> option and a valid URI")
+	flag.StringVar(&tplDir, "tplDir", "tpl", "spider tpl directory")
 	flag.IntVar(&n, "n", 50, "default queue pop number")
 	flag.IntVar(&un, "un", 50, "uuid pool size")
 

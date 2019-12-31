@@ -10,16 +10,12 @@ import (
 	"strings"
 )
 
-const token = "token"
-const uris = "[]url"
-const category = "type"
-
 func add(c *gin.Context) {
 
-	id, err := getPostParam(c, token)
+	id, err := getPostParam(c, system.TokenInAddApi)
 	if err != nil {
 		c.JSON(200, format.ToMap(map[string]string{
-			"error":   err.Error() + ":" + token,
+			"error":   err.Error() + ":" + system.TokenInAddApi,
 			"success": "false",
 		}))
 		return
@@ -35,19 +31,19 @@ func add(c *gin.Context) {
 		return
 	}
 
-	cat, err := getPostParam(c, category)
+	cat, err := getPostParam(c, system.CategoryInAddApi)
 	if err != nil {
 		c.JSON(200, format.ToMap(map[string]string{
-			"error":   err.Error() + ":" + category,
+			"error":   err.Error() + ":" + system.CategoryInAddApi,
 			"success": "false",
 		}))
 		return
 	}
 
-	urls, err := getPostParams(c, uris)
+	urls, err := getPostParams(c, system.UrlsInAddApi)
 	if err != nil {
 		c.JSON(200, format.ToMap(map[string]string{
-			"error":   err.Error() + ":" + uris,
+			"error":   err.Error() + ":" + system.UrlsInAddApi,
 			"success": "false",
 		}))
 		return
@@ -96,11 +92,11 @@ func genQueueType(category, uri string) string {
 }
 
 func genQueueName(category, uri string) string {
-	return "queue_" + genQueueType(category, uri)
+	return system.QueuePrefix + genQueueType(category, uri)
 }
 
 func genTotalQueueName(category, uri string) string {
-	return "total_" + genQueueType(category, uri)
+	return system.QueueTotalPrefix + genQueueType(category, uri)
 }
 
 func checkEmpty(v string) error {

@@ -13,6 +13,7 @@ func Start(port string) {
 	r.POST("/auth", auth)
 	r.POST("/add", add)
 	r.POST("/get", get)
+	r.POST("/tpl", tpl)
 
 	r.NoRoute(method404)
 	r.Run(":" + port)

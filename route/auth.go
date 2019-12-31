@@ -5,6 +5,7 @@ import (
 	"github.com/liyuliang/utils/format"
 	"github.com/pkg/errors"
 	"github.com/liyuliang/rqueue/system"
+	"log"
 )
 
 func getAuthData(c *gin.Context) format.MapData {
@@ -36,12 +37,19 @@ func auth(c *gin.Context) {
 
 	id, err := system.Uid()
 	if err != nil {
-
 		c.JSON(200, format.ToMap(map[string]string{
 			"error": err.Error(),
 			"uuid":  "",
 		}))
 		return
+	}
+
+	data["uuid"] = format.Int64ToStr(id)
+
+	client := system.Redis()
+	r := client.HSet(system.SpiderClientSet, c.ClientIP(), data.String())
+	if r.Err() != nil {
+		log.Print(r.Err().Error())
 	}
 
 	c.JSON(200, format.ToMap(map[string]string{

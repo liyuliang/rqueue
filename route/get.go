@@ -13,7 +13,7 @@ func get(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(200, format.ToMap(map[string]string{
-			"error":   err.Error() + ":" + token,
+			"error":   err.Error() + ":" + system.QueueInGetApi,
 			"success": "false",
 		}))
 		return
@@ -25,6 +25,7 @@ func get(c *gin.Context) {
 	if n < 0 {
 		n = format.StrToInt(system.Config()["popNum"])
 	}
+
 	var data []string
 	client := system.Redis()
 	for i := 0; i < n; i++ {
@@ -32,7 +33,7 @@ func get(c *gin.Context) {
 		if v != "" {
 
 			data = append(data, v)
-			k := strings.Replace(queue, "queue_", "total_", -1)
+			k := strings.Replace(queue, system.QueuePrefix, system.QueueTotalPrefix, -1)
 			client.Decr(k)
 		}
 	}

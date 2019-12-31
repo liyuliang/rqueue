@@ -4,7 +4,6 @@ import (
 	"github.com/zheng-ji/goSnowFlake"
 	"time"
 	"errors"
-	"log"
 )
 
 var idChans chan int64
@@ -103,7 +102,6 @@ wait:
 		select {
 
 		case id = <-idChans:
-			log.Println("uuid from channel ")
 			err = nil
 			break wait
 
