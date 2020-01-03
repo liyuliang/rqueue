@@ -88,7 +88,7 @@ func getPostParam(c *gin.Context, key string) (string, error) {
 }
 
 func genQueueType(category, uri string) string {
-	return category + "_" + getKeyFromUrl(uri)
+	return getKeyFromUrl(uri) + "_" + category
 }
 
 func genQueueName(category, uri string) string {

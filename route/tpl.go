@@ -9,11 +9,12 @@ import (
 	"os"
 	"io/ioutil"
 	"strings"
+	"encoding/base64"
 )
 
 func tpl(c *gin.Context) {
 
-	tplDir := system.Config()["tplDir"]
+	tplDir := system.Config()[system.SystemTplDir]
 
 	if tplDir == "" {
 		c.JSON(200, format.ToMap(map[string]string{
@@ -22,7 +23,6 @@ func tpl(c *gin.Context) {
 		}))
 		return
 	}
-	//新春大吉, "音"你大吉 峰 会
 
 	ext := ".toml"
 
@@ -60,7 +60,9 @@ func tpl(c *gin.Context) {
 		k = strings.Replace(k, ext, "", -1)
 		k = strings.Replace(k, "/", "", -1)
 
-		m[k] = string(data)
+
+		//m[k] = string(data)
+		m[k] = base64.StdEncoding.EncodeToString(data)
 	}
 
 	m["error"] = ""

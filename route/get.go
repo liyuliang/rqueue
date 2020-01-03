@@ -22,7 +22,7 @@ func get(c *gin.Context) {
 	num, _ := c.GetPostForm("n")
 
 	n := format.StrToInt(num)
-	if n < 0 {
+	if n < 1 {
 		n = format.StrToInt(system.Config()["popNum"])
 	}
 

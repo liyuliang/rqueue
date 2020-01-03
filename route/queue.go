@@ -13,9 +13,9 @@ func queue(c *gin.Context) {
 
 	data := format.Map()
 	for _, v := range client.Keys("*").Val() {
-		if strings.Contains(v, "queue_") {
+		if strings.Contains(v, system.QueuePrefix) {
 
-			k := strings.Replace(v, "queue_", "total_", -1)
+			k := strings.Replace(v, system.QueuePrefix, system.QueueTotalPrefix, -1)
 			data[v] = client.Get(k).Val()
 		}
 	}
