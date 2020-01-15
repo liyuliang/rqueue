@@ -12,6 +12,7 @@ func Start(port string) {
 	r.GET("/uuid", uuid)
 	r.POST("/auth", auth)
 	r.POST("/add", add)
+	r.POST("/submit", submit)
 	r.POST("/get", get)
 	r.POST("/tpl", tpl)
 

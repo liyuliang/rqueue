@@ -1,8 +1,10 @@
 package system
 
 var (
-	QueuePrefix      = "queue_"
-	QueueTotalPrefix = "total_"
+	RedisQueuePrefix      = "queue_"
+	RedisQueueTotalPrefix = "total_"
+	RedisQueueStorage     = "storage"
+	RedisUUidKey          = "add_api_token"
 
 	SpiderClientSet  = "client"
 	TokenInAddApi    = "token"
@@ -16,4 +18,5 @@ var (
 	SystemRedisUri = "redisUri"
 	SystemPopNum   = "popNum"
 	SystemTplDir   = "tplDir"
+	SystemIsDebug  = "debug"
 )

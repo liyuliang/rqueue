@@ -15,6 +15,8 @@ func main() {
 		system.SystemRedisUri: u,
 		system.SystemPopNum:   format.IntToStr(n),
 		system.SystemTplDir:   tplDir,
+		system.SystemIsDebug:  debug,
+
 		//"uuidNum":  format.IntToStr(un),
 	}))
 
@@ -27,6 +29,7 @@ var (
 	n      int
 	un     int
 	tplDir string
+	debug  string
 )
 
 func init() {
@@ -38,6 +41,7 @@ func init() {
 	flag.StringVar(&tplDir, "tplDir", "tpl", "spider tpl directory")
 	flag.IntVar(&n, "n", 50, "default queue pop number")
 	flag.IntVar(&un, "un", 50, "uuid pool size")
+	flag.StringVar(&debug, "debug", "false", "is running debug module")
 
 	flag.Parse()
 

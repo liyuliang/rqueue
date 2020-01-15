@@ -33,7 +33,7 @@ func get(c *gin.Context) {
 		if v != "" {
 
 			data = append(data, v)
-			k := strings.Replace(queue, system.QueuePrefix, system.QueueTotalPrefix, -1)
+			k := strings.Replace(queue, system.RedisQueuePrefix, system.RedisQueueTotalPrefix, -1)
 			client.Decr(k)
 		}
 	}

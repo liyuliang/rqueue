@@ -1,4 +1,11 @@
 [[action]]
+return="database"
+[action.operation]
+key="database"
+type="temporary"
+value="gufengmh8_list"
+
+[[action]]
 return="url"
 [action.target]
 key="url"
@@ -165,3 +172,21 @@ type="temp"
 [action.after.filter]
 target="pages"
 value=""
+
+#
+##将 return 的所有值, 放在 data中, post 给gateway的/submit
+#[[action]]
+#[action.target]
+#key="gufengmh8_list"
+#type="return"
+#value=""
+#[action.operation]
+#key=""
+#type="post"
+#value="/submit"
+#
+##把 system 中的 token 放在 http 中的 header 中, key 为 token
+#[action.operation.option]
+#key="token"
+#type="system"
+#value="header"

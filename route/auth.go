@@ -29,7 +29,7 @@ func auth(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(200, format.ToMap(map[string]string{
-			"error": err.Error(),
+			"error": "Auth param wrong",
 			"uuid":  "",
 		}))
 		return

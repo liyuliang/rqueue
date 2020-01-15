@@ -12,7 +12,7 @@ import (
 
 func add(c *gin.Context) {
 
-	id, err := getPostParam(c, system.TokenInAddApi)
+	token, err := getPostParam(c, system.TokenInAddApi)
 	if err != nil {
 		c.JSON(200, format.ToMap(map[string]string{
 			"error":   err.Error() + ":" + system.TokenInAddApi,
@@ -21,7 +21,7 @@ func add(c *gin.Context) {
 		return
 	}
 
-	err = checkUUid(id)
+	err = checkUUid(token)
 
 	if err != nil {
 		c.JSON(200, format.ToMap(map[string]string{
@@ -60,6 +60,8 @@ func add(c *gin.Context) {
 		client.Incr(total)
 	}
 
+	client.Set(system.RedisUUidKey, token, format.IntToTimeSecond(60*60*2))
+
 	c.JSON(200, format.ToMap(map[string]string{
 		"error":   "",
 		"success": "true",
@@ -67,7 +69,12 @@ func add(c *gin.Context) {
 }
 
 func checkUUid(uuid string) error {
-	//TODO 24小时 token, 防止重播攻击
+
+	client := system.Redis()
+	r := client.HGet(system.RedisUUidKey, uuid)
+	if r.String() != "" && system.Config()[system.SystemIsDebug] == "false" {
+		return errors.New("token exist, this is repeat request")
+	}
 	return nil
 }
 
@@ -88,15 +95,16 @@ func getPostParam(c *gin.Context, key string) (string, error) {
 }
 
 func genQueueType(category, uri string) string {
+	// same as tpl dir config file name
 	return getKeyFromUrl(uri) + "_" + category
 }
 
 func genQueueName(category, uri string) string {
-	return system.QueuePrefix + genQueueType(category, uri)
+	return system.RedisQueuePrefix + genQueueType(category, uri)
 }
 
 func genTotalQueueName(category, uri string) string {
-	return system.QueueTotalPrefix + genQueueType(category, uri)
+	return system.RedisQueueTotalPrefix + genQueueType(category, uri)
 }
 
 func checkEmpty(v string) error {

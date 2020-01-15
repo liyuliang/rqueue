@@ -13,9 +13,9 @@ func queue(c *gin.Context) {
 
 	data := format.Map()
 	for _, v := range client.Keys("*").Val() {
-		if strings.Contains(v, system.QueuePrefix) {
+		if strings.Contains(v, system.RedisQueuePrefix) {
 
-			k := strings.Replace(v, system.QueuePrefix, system.QueueTotalPrefix, -1)
+			k := strings.Replace(v, system.RedisQueuePrefix, system.RedisQueueTotalPrefix, -1)
 			data[v] = client.Get(k).Val()
 		}
 	}
