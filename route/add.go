@@ -72,7 +72,8 @@ func checkUUid(uuid string) error {
 
 	client := system.Redis()
 	r := client.HGet(system.RedisUUidKey, uuid)
-	if r.String() != "" && system.Config()[system.SystemIsDebug] == "false" {
+
+	if r.Val() != "" && system.Config()[system.SystemIsDebug] == "false" {
 		return errors.New("token exist, this is repeat request")
 	}
 	return nil
