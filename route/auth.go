@@ -47,7 +47,7 @@ func auth(c *gin.Context) {
 	data["uuid"] = format.Int64ToStr(id)
 
 	client := system.Redis()
-	r := client.HSet(system.SpiderClientSet, c.ClientIP(), data.String())
+	r := client.HSet(system.RedisSpiderClientSet, c.ClientIP(), data.String())
 	if r.Err() != nil {
 		log.Print(r.Err().Error())
 	}

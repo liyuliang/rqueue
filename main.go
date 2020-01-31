@@ -16,7 +16,7 @@ func main() {
 		system.SystemPopNum:   format.IntToStr(n),
 		system.SystemTplDir:   tplDir,
 		system.SystemIsDebug:  debug,
-
+		system.SystemPopNum:   format.IntToStr(popNum),
 		//"uuidNum":  format.IntToStr(un),
 	}))
 
@@ -28,6 +28,7 @@ var (
 	p      string
 	n      int
 	un     int
+	popNum int
 	tplDir string
 	debug  string
 )
@@ -42,6 +43,7 @@ func init() {
 	flag.IntVar(&n, "n", 50, "default queue pop number")
 	flag.IntVar(&un, "un", 50, "uuid pool size")
 	flag.StringVar(&debug, "debug", "false", "is running debug module")
+	flag.IntVar(&popNum, "pn", 10, "get api each pop number")
 
 	flag.Parse()
 

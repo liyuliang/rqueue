@@ -1,12 +1,13 @@
 package system
 
 var (
-	RedisQueuePrefix      = "queue_"
-	RedisQueueTotalPrefix = "total_"
-	RedisQueueStorage     = "storage"
-	RedisUUidKey          = "add_api_token"
+	RedisQueueTotalPrefix   = "total:"
+	RedisQueuePrefix        = "queue:"
+	RedisTokenExpiredPrefix = "api:token:"
 
-	SpiderClientSet  = "client"
+	RedisQueueStorage    = "storage"
+	RedisSpiderClientSet = "spiders:client"
+
 	TokenInAddApi    = "token"
 	UrlsInAddApi     = "[]url"
 	CategoryInAddApi = "type"

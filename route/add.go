@@ -8,9 +8,14 @@ import (
 	"net/url"
 	"github.com/pkg/errors"
 	"strings"
+	"time"
 )
 
 func add(c *gin.Context) {
+
+	//token
+	//type
+	//[]url
 
 	token, err := getPostParam(c, system.TokenInAddApi)
 	if err != nil {
@@ -21,7 +26,8 @@ func add(c *gin.Context) {
 		return
 	}
 
-	err = checkUUid(token)
+	token = system.RedisTokenExpiredPrefix + token
+	err = checkUnique(token)
 
 	if err != nil {
 		c.JSON(200, format.ToMap(map[string]string{
@@ -60,18 +66,18 @@ func add(c *gin.Context) {
 		client.Incr(total)
 	}
 
-	client.Set(system.RedisUUidKey, token, format.IntToTimeSecond(60*60*2))
+	r := client.Set(token, 120, 120*time.Second)
 
 	c.JSON(200, format.ToMap(map[string]string{
-		"error":   "",
+		"error":   format.ErrorToStr(r.Err()),
 		"success": "true",
 	}))
 }
 
-func checkUUid(uuid string) error {
+func checkUnique(k string) error {
 
-	client := system.Redis()
-	r := client.HGet(system.RedisUUidKey, uuid)
+	redis := system.Redis()
+	r := redis.Get(k)
 
 	if r.Val() != "" && system.Config()[system.SystemIsDebug] == "false" {
 		return errors.New("token exist, this is repeat request")

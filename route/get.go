@@ -30,12 +30,13 @@ func get(c *gin.Context) {
 	client := system.Redis()
 	for i := 0; i < n; i++ {
 		v := client.LPop(queue).Val()
-		if v != "" {
-
-			data = append(data, v)
-			k := strings.Replace(queue, system.RedisQueuePrefix, system.RedisQueueTotalPrefix, -1)
-			client.Decr(k)
+		if v == "" {
+			break
 		}
+
+		data = append(data, v)
+		k := strings.Replace(queue, system.RedisQueuePrefix, system.RedisQueueTotalPrefix, -1)
+		client.Decr(k)
 	}
 	c.JSON(200, data)
 }
