@@ -1,15 +1,20 @@
 [[action]]
+return="database"
+[action.operation]
+key="database"
+type="temporary"
+value="gufengmh8_page"
+
+
+[[action]]
 return="url"
 [action.target]
 key="url"
 type="string"
-value="https://www.gufengmh8.com/manhua/woweicangsheng/1163707.html"
-
+value="https://www.gufengmh8.com/manhua/woweicangsheng/1207509.html"
 [action.operation]
 key="html"
 type="download"
-value=""
-
 [action.after]
 [action.after.transform]
 target="html"
@@ -21,31 +26,24 @@ from="<img{^>}+src=\"({^\"}+)\"{^>}+data-original=\"({^\"}+)\">"
 to="<img src=\"$1\" data-original=\"$2\">"
 
 
-
 [[action]]
 return="code"
-
 [action.target]
 key="url"
 type="temp"
-value=""
-
 [action.operation]
 key="code"
 type="regex_get"
-value="://\\w+.(\\w+).\\w+"
+value="://\\w+\\.(\\w+)\\.\\w+"
 
 
 [[action]]
-return=""
 [action.target]
 key="html"
 type="temp"
-value=""
 [action.operation]
 key="dom"
 type="dom_parser"
-value=""
 
 
 [[action]]
@@ -53,7 +51,6 @@ return="title"
 [action.target]
 key="dom"
 type="temp"
-value=""
 [action.operation]
 key="title"
 type="dom_find"
@@ -65,29 +62,26 @@ return="number"
 [action.target]
 key="html"
 type="temp"
-value=""
 [action.operation]
 key="number"
 type="regex_get"
-value="comic.(\\w+)"
+value="comic\\.(\\d+)"
+
 
 [[action]]
 return="chapter"
 [action.target]
 key="url"
 type="temp"
-value=""
 [action.operation]
 key="chapter"
 type="regex_get"
 value="(\\w+)\\.html"
 
 [[action]]
-return=""
 [action.target]
 key="html"
 type="temp"
-value=""
 [action.operation]
 key="imagePath"
 type="regex_get"
@@ -95,11 +89,9 @@ value="var chapterPath\\s?=\\s?\"([^\"]+)\""
 
 
 [[action]]
-return=""
 [action.target]
 key="html"
 type="temp"
-value=""
 [action.operation]
 key="imgsStr"
 type="regex_get"

@@ -35,8 +35,13 @@ func get(c *gin.Context) {
 		}
 
 		data = append(data, v)
-		k := strings.Replace(queue, system.RedisQueuePrefix, system.RedisQueueTotalPrefix, -1)
+		k := strings.Replace(queue, system.RedisQueuePrefix, "", -1)
+		k = system.RedisQueueTotalPrefix + k
 		client.Decr(k)
 	}
-	c.JSON(200, data)
+	if len(data) == 0 {
+		c.String(200, "")
+	} else {
+		c.JSON(200, data)
+	}
 }

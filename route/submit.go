@@ -12,8 +12,11 @@ func submit(c *gin.Context) {
 	buf.ReadFrom(c.Request.Body)
 	str := buf.String()
 
+	k := system.RedisQueueStorage
 	client := system.Redis()
-	client.RPush(system.RedisQueueStorage, str)
+
+	client.RPush(k, str)
+	client.Incr(system.RedisQueueTotalPrefix + k)
 
 	c.String(200, str)
 }

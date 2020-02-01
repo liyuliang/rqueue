@@ -38,23 +38,19 @@ return="code"
 [action.target]
 key="url"
 type="temp"
-value=""
 [action.operation]
 key="code"
 type="regex_get"
-value="://\\w+.(\\w+).\\w+"
+value="://\\w+\\.(\\w+)\\.\\w+"
 
 
 [[action]]
-return=""
 [action.target]
 key="html"
 type="temp"
-value=""
 [action.operation]
 key="dom"
 type="dom_parser"
-value=""
 
 
 [[action]]
@@ -62,7 +58,6 @@ return="title"
 [action.target]
 key="dom"
 type="temp"
-value=""
 [action.operation]
 key="title"
 type="dom_find"
@@ -74,55 +69,21 @@ return="number"
 [action.target]
 key="html"
 type="temp"
-value=""
 [action.operation]
 key="number"
 type="regex_get"
-value="comic.(\\d+)"
+value="comic\\.(\\d+)"
 
 [[action]]
-return="desc"
+return="intro"
 [action.target]
 key="dom"
 type="temp"
 value=""
 [action.operation]
-key="desc"
+key="intro"
 type="dom_find"
 value="#intro-all"
-
-[[action]]
-return="desc"
-[action.target]
-key="desc"
-type="temp"
-value="\\n"
-[action.operation]
-key="desc"
-type="strings_replace"
-value=""
-
-[[action]]
-return="desc"
-[action.target]
-key="desc"
-type="temp"
-value="\\t"
-[action.operation]
-key="desc"
-type="strings_replace"
-value=""
-
-[[action]]
-return="desc"
-[action.target]
-key="desc"
-type="temp"
-value=" "
-[action.operation]
-key="desc"
-type="trim"
-value=""
 
 
 [[action]]
@@ -130,7 +91,6 @@ return="face"
 [action.target]
 key="dom"
 type="temp"
-value=""
 [action.operation]
 key="face"
 type="dom_find"
